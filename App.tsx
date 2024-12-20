@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet
+} from 'react-native';
+import { SQLiteProvider } from 'expo-sqlite';
+import React from 'react';
+import TodoApp from './TodoApp';
+import { migrateDbIfNeeded } from './action/migrateDbIfNeeded';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SQLiteProvider databaseName="todo.db" onInit={migrateDbIfNeeded}>
+      <SafeAreaView style={styles.container}>
+        <TodoApp />
+      </SafeAreaView>
+    </SQLiteProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#f4f4f4',
   },
 });
